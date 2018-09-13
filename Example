@@ -1,0 +1,71 @@
+#include <iostream>
+#include <windows.h>
+#include <iomanip>
+#include <cmath>
+
+///////////////////// definicion de variables //////////
+double id;
+float cost,cost_f; 
+float weigth;
+char name[256];
+////////////////////// Costos de envio ////////////////
+int tax_1 = 15;
+int tax_2 = 10;
+int tax_3 = 5;
+int tax_4 = 0;
+
+void gotoxy(int x,int y){  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos); 
+		}
+using namespace std;
+int main(int argc, char** argv) {
+	gotoxy(50,0); cout <<"KAOS Dominicana S.A."<<'\n';
+	////////////////////////// Recoleccion de datos ////////////////////
+	std::cout << "Buenas, por favor digitar los datos pedidos "<<endl;
+	std::cout << "Nombre: ";
+	std::cin.getline (name,256);
+	cout << "Cedula: ";  cin >> id;
+	gotoxy(0,4); cout << "Precio: "; cin >> cost;
+	gotoxy(15,4); cout << "Peso: ";  cin >> weigth;
+	////////////////////////// Parte logica matematica ////////////////
+	if (weigth < 50){
+		if((cost >= 0) && (cost <= 25) ){
+		cost_f = tax_1;
+		}
+		if((cost > 25.01) && (cost <= 50) ){
+		cost_f = tax_2;
+		}
+		if((cost > 50.01) && (cost < 75) ){
+		cost_f = tax_3;
+		}
+		if(cost > 75) {
+		cost_f = tax_4;
+		}		
+	}
+	else {
+		cost_f = 25*(1-(pow(1.01,(-9.21*weigth))));
+	}
+	/////////////////////// Resultados ///////////////////////////////
+	/////////////////////// titulacion //////////////////////////////
+	gotoxy(50,6); cout << "Cotizacion ";
+	gotoxy(0,10); cout << "Nombre: ";
+	gotoxy(30,10); cout << "Cedula: ";
+	gotoxy(50,10); cout << "Costo: ";
+	gotoxy(70,10); cout << "Peso: ";
+	gotoxy(90,10); cout << "Costo Envio: ";
+	//////////////////////  Datos //////////////////////////////////
+	gotoxy(0,11); cout << name;
+	gotoxy(30,11); std::cout << std::setprecision(11) << id;
+	gotoxy(50,11); std::cout << std::setprecision(4) << cost;
+	gotoxy(70,11); std::cout << std::setprecision(4) << weigth;
+	gotoxy(90,11); std::cout << std::setprecision(4) << cost_f;
+	//////////////////////////////////////////////////////////////
+	cout << '\n';
+	
+	return 0;
+}
